@@ -1,6 +1,7 @@
 package com.example.RestaurantApi.user.service;
 
 import com.example.RestaurantApi.TestUtil;
+import com.example.RestaurantApi.dto.UserDto;
 import com.example.RestaurantApi.entity.User;
 import com.example.RestaurantApi.repository.UserRepository;
 import com.example.RestaurantApi.service.implemente.UserServiceImpl;
@@ -29,13 +30,13 @@ class UserServiceTest {
     private UserServiceImpl userService;
 
     @Test
-    public void getUsers(){
+     void getUsers(){
 
         List<User> users = TestUtil.getMockUsers();
 
         when(mockRepository.findAll()).thenReturn(users);
 
-        List<User> response=userService.getUsers();
+        List<UserDto> response=userService.getUsers();
 
 
 
