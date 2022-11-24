@@ -1,7 +1,7 @@
 package com.example.RestaurantApi.user.controller;
 
 import com.example.RestaurantApi.TestUtil;
-import com.example.RestaurantApi.entity.User;
+import com.example.RestaurantApi.model.entity.User;
 import com.example.RestaurantApi.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +31,6 @@ class UserControllerTest {
 
     @Test
      void testFindAll() throws Exception {
-
         List<User> users = TestUtil.getMockUsers();
 
         when(mockRepository.findAll()).thenReturn(users);
@@ -40,7 +39,5 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(users.size()))
                 .andDo(print());
-
-
-    }
+   }
 }

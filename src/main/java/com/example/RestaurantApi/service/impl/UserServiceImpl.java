@@ -1,13 +1,11 @@
-package com.example.RestaurantApi.service.implemente;
+package com.example.RestaurantApi.service.impl;
 
-import com.example.RestaurantApi.dto.UserDto;
-import com.example.RestaurantApi.dto.converter.UserDtoConverter;
+import com.example.RestaurantApi.model.dto.UserDto;
+import com.example.RestaurantApi.model.dto.converter.UserDtoConverter;
 import com.example.RestaurantApi.repository.UserRepository;
 import com.example.RestaurantApi.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,18 +19,12 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.userDtoConverter = userDtoConverter;
     }
-
-    @Override
     @Transactional(readOnly = true)
+    @Override
     public List<UserDto> getUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(userDtoConverter::convertToUserDto)
+                .map(userDtoConverter::convert)
                 .collect(Collectors.toList());
-
-
-
     }
-
-
 }

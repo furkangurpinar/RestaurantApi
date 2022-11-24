@@ -1,7 +1,6 @@
-package com.example.RestaurantApi.restController;
+package com.example.RestaurantApi.controller;
 
-import com.example.RestaurantApi.dto.UserDto;
-import com.example.RestaurantApi.entity.User;
+import com.example.RestaurantApi.model.dto.UserDto;
 import com.example.RestaurantApi.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -20,5 +19,4 @@ public class UserController {
     public List<UserDto> getUsers(){
         return userService.getUsers();
     }
-
 }
