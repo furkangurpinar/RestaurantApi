@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class UserRestExceptionHandler {
 
     @ExceptionHandler
-    ResponseEntity<UserErrorResponse> handleException(UserNotFoundException exc){
+    ResponseEntity<UserErrorResponse> handleException(UserNotFoundException exc) {
         UserErrorResponse error = new UserErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
                 exc.getMessage(),

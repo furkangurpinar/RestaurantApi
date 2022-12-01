@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor // final işlemler için constructor
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepositoryDelegate userRepositoryDelegate;
 
     @Override
     public List<UserDto> getUsers() {
-       return userRepositoryDelegate.getUsers();
+        return userRepositoryDelegate.getUsers();
     }
 
     @Override

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -16,12 +17,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserDto>>  getUsers(){
+    public ResponseEntity<List<UserDto>> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto>  getUser(@PathVariable int userId){
-      return new ResponseEntity<>(userService.getUser(userId),HttpStatus.OK);
+    public ResponseEntity<UserDto> getUser(@PathVariable int userId) {
+        return new ResponseEntity<>(userService.getUser(userId), HttpStatus.OK);
     }
 }
