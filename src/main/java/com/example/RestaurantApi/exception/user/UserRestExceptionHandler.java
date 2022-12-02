@@ -20,9 +20,9 @@ public class UserRestExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<UserErrorResponse> handleException(Exception exc) {
         UserErrorResponse error = new UserErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 exc.getMessage(),
                 System.currentTimeMillis());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
