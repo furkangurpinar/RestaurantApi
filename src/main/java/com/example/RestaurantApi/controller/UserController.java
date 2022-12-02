@@ -2,21 +2,27 @@ package com.example.RestaurantApi.controller;
 
 import com.example.RestaurantApi.model.dto.UserDto;
 import com.example.RestaurantApi.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequiredArgsConstructor
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    @GetMapping
+    public ResponseEntity<List<UserDto>> getUsers() {
+        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/users")
-    public List<UserDto> getUsers(){
-        return userService.getUsers();
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> getUser(@PathVariable int userId) {
+        return new ResponseEntity<>(userService.getUser(userId), HttpStatus.OK);
     }
 }
