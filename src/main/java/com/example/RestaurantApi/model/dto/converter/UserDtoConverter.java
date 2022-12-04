@@ -13,4 +13,14 @@ public final class UserDtoConverter {
                 from.getUserMail(),
                 from.getUserPassword());
     }
+
+    public static User convert(UserDto from) {
+        return User.builder()
+                .userId(from.getUserId())
+                .userName(from.getUserName())
+                .userPhoneNumber(from.getUserPhoneNumber())
+                .userMail(from.getUserMail())
+                .userPassword(from.getUserPassword())
+                .build();
+    }
 }

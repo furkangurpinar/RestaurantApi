@@ -42,9 +42,8 @@ public class UserRepositoryDelegateImpl implements UserRepositoryDelegate {
     @Transactional
     @Override
     public UserDto createUser(User user) {
-        Optional<User> response = Optional.of(user);
         userRepository.save(user);
-        return UserDtoConverter.convert(response.get());
+        return UserDtoConverter.convert(user);
     }
 }
 

@@ -1,8 +1,11 @@
 package com.example.RestaurantApi.user.controller;
 
 import com.example.RestaurantApi.TestUtil;
+import com.example.RestaurantApi.model.dto.UserDto;
+import com.example.RestaurantApi.model.dto.converter.UserDtoConverter;
 import com.example.RestaurantApi.model.entity.User;
 import com.example.RestaurantApi.repository.UserRepository;
+import com.example.RestaurantApi.request.UserRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,7 +52,8 @@ class UserControllerTest {
 
     @Test
     void getUser() throws Exception {
-        User user = new User(1, "ibolipa", "0543", "ibo@gmail.com", "12345");
+        User user = new User(1, "ibolipa", "0543", "ibo@gmail.com",
+                "12345", null, null);
 
         when(mockRepository.findById(anyInt())).thenReturn(Optional.of(user));
 
@@ -70,12 +74,14 @@ class UserControllerTest {
 
     @Test
     void createUser() throws Exception {
-        User user = new User(1, "ibolipa", "0543", "ibo@gmail.com", "12345");
+        User testUser = new User(1, "ibolipa", "0543",
+                "ibo@gmail.com", "12345", null, null);
+        UserRequest testRequest = new UserRequest(UserDtoConverter.convert(testUser));
 
-        when(mockRepository.save(user)).thenReturn(user);
+        when(mockRepository.save(testUser)).thenReturn(testUser);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/users")
-                        .content(asJsonString(user))
+                        .content(asJsonString(testRequest))
                         .contentType("application/json"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.userId", notNullValue()));
