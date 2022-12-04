@@ -3,6 +3,7 @@ package com.example.RestaurantApi.user.controller;
 import com.example.RestaurantApi.TestUtil;
 import com.example.RestaurantApi.model.entity.User;
 import com.example.RestaurantApi.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +66,26 @@ class UserControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/users/61"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value("User ID Not Found - 61"));
+    }
+
+    @Test
+    void createUser() throws Exception {
+        User user = new User(1, "ibolipa", "0543", "ibo@gmail.com", "12345");
+
+        when(mockRepository.save(user)).thenReturn(user);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                        .content(asJsonString(user))
+                        .contentType("application/json"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.userId", notNullValue()));
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
