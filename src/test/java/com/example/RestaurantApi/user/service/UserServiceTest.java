@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
@@ -63,5 +64,16 @@ class UserServiceTest {
         when(userRepositoryDelegate.getUser(anyInt())).thenThrow(new UserNotFoundException("User Id Not Found - 1"));
 
         assertThrows(UserNotFoundException.class, () -> userService.getUser(anyInt()));
+    }
+
+    @Test
+    void createUser() {
+        UserDto testUserDto = new UserDto(1, "ibolipa", "0543", "ibo@gmail.com", "12345");
+
+        when(userRepositoryDelegate.createUser(any(User.class))).thenReturn(testUserDto);
+
+        UserDto responseDto = userService.createUser(new User());
+
+        assertEquals(testUserDto, responseDto);
     }
 }

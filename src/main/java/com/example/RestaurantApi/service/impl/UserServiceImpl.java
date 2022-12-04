@@ -1,6 +1,7 @@
 package com.example.RestaurantApi.service.impl;
 
 import com.example.RestaurantApi.model.dto.UserDto;
+import com.example.RestaurantApi.model.entity.User;
 import com.example.RestaurantApi.repository.delegate.UserRepositoryDelegate;
 import com.example.RestaurantApi.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,4 +24,11 @@ public class UserServiceImpl implements UserService {
     public UserDto getUser(int userId) {
         return userRepositoryDelegate.getUser(userId);
     }
+
+    @Override
+    public UserDto createUser(User user) {
+        return userRepositoryDelegate.createUser(user);
+    }
+
+
 }

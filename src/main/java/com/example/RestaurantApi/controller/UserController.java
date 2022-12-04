@@ -1,6 +1,7 @@
 package com.example.RestaurantApi.controller;
 
 import com.example.RestaurantApi.model.dto.UserDto;
+import com.example.RestaurantApi.model.entity.User;
 import com.example.RestaurantApi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,5 +25,10 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUser(@PathVariable int userId) {
         return new ResponseEntity<>(userService.getUser(userId), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<UserDto> createUser(@RequestBody User user) {
+        return new ResponseEntity<>(userService.createUser(user), HttpStatus.OK);
     }
 }
