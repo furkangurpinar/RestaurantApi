@@ -18,8 +18,8 @@ public class TestUtil {
 
     public static List<UserDto> getMockUsersDtos() {
         return new ArrayList<>(Arrays.asList(
-                new UserDto(1, "Elon", "05435031446", "haho@gmail.com", "12345"),
-                new UserDto(2, "Mahmut", "123548", "halay@gmail.com", "54321"),
-                new UserDto(3, "Ibrahim", "963258", "domdom@gmail.com", "34216")));
+                new UserDto(1, "Elon", "05435031446", "haho@gmail.com", "12345", null, null),
+                new UserDto(2, "Mahmut", "123548", "halay@gmail.com", "54321", null, null),
+                new UserDto(3, "Ibrahim", "963258", "domdom@gmail.com", "34216", null, null)));
     }
 }

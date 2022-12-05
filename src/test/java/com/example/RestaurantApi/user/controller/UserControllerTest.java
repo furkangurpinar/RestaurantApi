@@ -1,8 +1,7 @@
 package com.example.RestaurantApi.user.controller;
 
 import com.example.RestaurantApi.TestUtil;
-import com.example.RestaurantApi.model.dto.UserDto;
-import com.example.RestaurantApi.model.dto.converter.UserDtoConverter;
+import com.example.RestaurantApi.model.dto.converter.UserConverter;
 import com.example.RestaurantApi.model.entity.User;
 import com.example.RestaurantApi.repository.UserRepository;
 import com.example.RestaurantApi.request.UserRequest;
@@ -76,7 +75,7 @@ class UserControllerTest {
     void createUser() throws Exception {
         User testUser = new User(1, "ibolipa", "0543",
                 "ibo@gmail.com", "12345", null, null);
-        UserRequest testRequest = new UserRequest(UserDtoConverter.convert(testUser));
+        UserRequest testRequest = new UserRequest(UserConverter.convert(testUser));
 
         when(mockRepository.save(testUser)).thenReturn(testUser);
 

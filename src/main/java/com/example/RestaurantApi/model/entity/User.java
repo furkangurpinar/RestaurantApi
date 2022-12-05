@@ -35,5 +35,5 @@ public class User {
     private LocalDateTime createDate;
 
     @Column
-    private LocalDateTime updateTime;
+    private LocalDateTime updateDate;
 }

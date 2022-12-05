@@ -2,14 +2,16 @@ package com.example.RestaurantApi.repository.delegate.impl;
 
 import com.example.RestaurantApi.exception.user.UserNotFoundException;
 import com.example.RestaurantApi.model.dto.UserDto;
-import com.example.RestaurantApi.model.dto.converter.UserDtoConverter;
+import com.example.RestaurantApi.model.dto.converter.UserConverter;
 import com.example.RestaurantApi.model.entity.User;
 import com.example.RestaurantApi.repository.UserRepository;
 import com.example.RestaurantApi.repository.delegate.UserRepositoryDelegate;
+import com.example.RestaurantApi.request.UserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,7 +27,7 @@ public class UserRepositoryDelegateImpl implements UserRepositoryDelegate {
     public List<UserDto> getUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(UserDtoConverter::convert)
+                .map(UserConverter::convert)
                 .collect(Collectors.toList());
     }
 
@@ -36,14 +38,16 @@ public class UserRepositoryDelegateImpl implements UserRepositoryDelegate {
         if (response.isEmpty()) {
             throw new UserNotFoundException("User ID Not Found - " + userId);
         }
-        return UserDtoConverter.convert(response.get());
+        return UserConverter.convert(response.get());
     }
 
     @Transactional
     @Override
-    public UserDto createUser(User user) {
+    public UserDto createUser(UserRequest request) {
+        User user = UserConverter.convert(request.getUserDto());
+        user.setCreateDate(LocalDateTime.now());
         userRepository.save(user);
-        return UserDtoConverter.convert(user);
+        return UserConverter.convert(user);
     }
 }
 

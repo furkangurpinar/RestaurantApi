@@ -1,8 +1,8 @@
 package com.example.RestaurantApi.service.impl;
 
 import com.example.RestaurantApi.model.dto.UserDto;
-import com.example.RestaurantApi.model.entity.User;
 import com.example.RestaurantApi.repository.delegate.UserRepositoryDelegate;
+import com.example.RestaurantApi.request.UserRequest;
 import com.example.RestaurantApi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto createUser(User user) {
-        return userRepositoryDelegate.createUser(user);
+    public UserDto createUser(UserRequest request) {
+        return userRepositoryDelegate.createUser(request);
     }
 
 
