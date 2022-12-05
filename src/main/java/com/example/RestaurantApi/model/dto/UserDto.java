@@ -1,10 +1,12 @@
 package com.example.RestaurantApi.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Data
+@EqualsAndHashCode
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
@@ -19,4 +21,7 @@ public class UserDto {
 
     private String userPassword;
 
+    private LocalDateTime createDate;
+
+    private LocalDateTime updateDate;
 }

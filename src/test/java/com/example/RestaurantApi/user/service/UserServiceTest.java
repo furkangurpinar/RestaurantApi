@@ -5,6 +5,7 @@ import com.example.RestaurantApi.exception.user.UserNotFoundException;
 import com.example.RestaurantApi.model.dto.UserDto;
 import com.example.RestaurantApi.model.entity.User;
 import com.example.RestaurantApi.repository.delegate.UserRepositoryDelegate;
+import com.example.RestaurantApi.request.UserRequest;
 import com.example.RestaurantApi.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
@@ -47,13 +49,14 @@ class UserServiceTest {
     @Test
     void getUser() {
 
-        UserDto userDto = new UserDto(1, "ibolipa", "0543", "ibo@gmail.com", "12345");
+        UserDto userDto = new UserDto(1, "ibolipa", "0543",
+                "ibo@gmail.com", "12345", null, null);
 
         when(userRepositoryDelegate.getUser(anyInt())).thenReturn(userDto);
 
         UserDto result = userService.getUser(1);
 
-        assertEquals(result.getUserId(), 1);
+        assertEquals(1, result.getUserId());
         assertEquals("ibolipa", result.getUserName());
     }
 
@@ -63,5 +66,17 @@ class UserServiceTest {
         when(userRepositoryDelegate.getUser(anyInt())).thenThrow(new UserNotFoundException("User Id Not Found - 1"));
 
         assertThrows(UserNotFoundException.class, () -> userService.getUser(anyInt()));
+    }
+
+    @Test
+    void createUser() {
+        UserDto testUserDto = new UserDto(1, "ibolipa", "0543",
+                "ibo@gmail.com", "12345", null, null);
+
+        when(userRepositoryDelegate.createUser(any(UserRequest.class))).thenReturn(testUserDto);
+
+        UserDto responseDto = userService.createUser(new UserRequest());
+
+        assertEquals(testUserDto, responseDto);
     }
 }
