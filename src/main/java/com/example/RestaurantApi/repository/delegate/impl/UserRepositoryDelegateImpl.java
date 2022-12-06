@@ -49,5 +49,13 @@ public class UserRepositoryDelegateImpl implements UserRepositoryDelegate {
         userRepository.save(user);
         return UserConverter.convert(user);
     }
+
+    @Transactional
+    @Override
+    public void saveUser(UserDto userDto) {
+        User user = UserConverter.convert(userDto);
+        userRepository.save(user);
+    }
+
 }
 

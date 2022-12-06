@@ -79,4 +79,22 @@ class UserServiceTest {
 
         assertEquals(testUserDto, responseDto);
     }
+
+    @Test
+    void updateUser(){
+        UserDto testUserDto = new UserDto(1, "ibolipa", "0543",
+                "ibo@gmail.com", "12345", null, null);
+
+        when(userRepositoryDelegate.getUser(anyInt())).thenReturn(testUserDto);
+
+        testUserDto.setUserPhoneNumber("0552");
+        testUserDto.setUserName("mamolipa");
+        testUserDto.setUserMail("cenderme");
+
+        userRepositoryDelegate.saveUser(testUserDto);
+
+        assertEquals("mamolipa",testUserDto.getUserName());
+        assertEquals("cenderme",testUserDto.getUserMail());
+        assertEquals("0552",testUserDto.getUserPhoneNumber());
+    }
 }

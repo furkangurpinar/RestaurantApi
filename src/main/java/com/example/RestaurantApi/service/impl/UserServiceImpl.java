@@ -30,5 +30,16 @@ public class UserServiceImpl implements UserService {
         return userRepositoryDelegate.createUser(request);
     }
 
+    @Override
+    public void updateUser(int userId, UserDto userDto) {
 
+        UserDto response = userRepositoryDelegate.getUser(userId);
+
+        response.setUserMail(userDto.getUserMail());
+        response.setUserName(userDto.getUserName());
+        response.setUserPhoneNumber(userDto.getUserPhoneNumber());
+        response.setUserPassword(userDto.getUserPassword());
+
+        userRepositoryDelegate.saveUser(response);
+    }
 }

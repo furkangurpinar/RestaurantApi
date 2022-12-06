@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -92,5 +93,36 @@ class UserControllerTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Test
+    void updateUser() throws Exception {
+        User testUser = new User(1, "ibolipa", "0543",
+                "ibo@gmail.com", "12345", null, null);
+
+        when(mockRepository.findById(anyInt())).thenReturn(Optional.of(testUser));
+        when(mockRepository.save(testUser)).thenReturn(testUser);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/" + testUser.getUserId())
+                        .content(asJsonString(testUser))
+                        .contentType("application/json"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userId", notNullValue()))
+                .andExpect(jsonPath("$.userId").value("1"));
+    }
+
+    @Test
+    void updateUser_notFound() throws Exception {
+        User testUser = new User(1, "ibolipa", "0543",
+                "ibo@gmail.com", "12345", null, null);
+
+        when(mockRepository.findById(anyInt())).thenReturn(Optional.empty());
+        when(mockRepository.save(any(User.class))).thenReturn(testUser);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/" + testUser.getUserId())
+                        .content(asJsonString(testUser))
+                        .contentType("application/json"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("User ID Not Found - 1"));
     }
 }
