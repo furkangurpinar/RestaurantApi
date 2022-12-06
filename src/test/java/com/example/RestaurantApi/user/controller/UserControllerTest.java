@@ -64,7 +64,6 @@ class UserControllerTest {
 
     @Test
     void getUser_whenUserIdDoesNotExist_shouldReturnHttpNotFound() throws Exception {
-
         when(mockRepository.findById(anyInt())).thenReturn(Optional.empty());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/users/61"))

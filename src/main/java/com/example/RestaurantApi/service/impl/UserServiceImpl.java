@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(int userId, UserDto userDto) {
-
         UserDto response = userRepositoryDelegate.getUser(userId);
 
         response.setUserMail(userDto.getUserMail());
@@ -40,6 +39,6 @@ public class UserServiceImpl implements UserService {
         response.setUserPhoneNumber(userDto.getUserPhoneNumber());
         response.setUserPassword(userDto.getUserPassword());
 
-        userRepositoryDelegate.saveUser(response);
+        userRepositoryDelegate.updateUser(response);
     }
 }

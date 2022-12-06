@@ -12,5 +12,5 @@ public interface UserRepositoryDelegate {
 
     UserDto createUser(UserRequest request);
 
-    void saveUser(UserDto userDto);
+    void updateUser(UserDto userDto);
 }

@@ -15,11 +15,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class UserServiceTest {
@@ -32,7 +31,6 @@ class UserServiceTest {
 
     @Test
     void getUsers() {
-
         List<User> users = TestUtil.getMockUsers();
 
         when(userRepositoryDelegate.getUsers()).thenReturn(TestUtil.getMockUsersDtos());
@@ -48,7 +46,6 @@ class UserServiceTest {
 
     @Test
     void getUser() {
-
         UserDto userDto = new UserDto(1, "ibolipa", "0543",
                 "ibo@gmail.com", "12345", null, null);
 
@@ -62,7 +59,6 @@ class UserServiceTest {
 
     @Test
     void getUser_itShouldThrowNotFound_whenUserIdNotFound() {
-
         when(userRepositoryDelegate.getUser(anyInt())).thenThrow(new UserNotFoundException("User Id Not Found - 1"));
 
         assertThrows(UserNotFoundException.class, () -> userService.getUser(anyInt()));
@@ -81,7 +77,7 @@ class UserServiceTest {
     }
 
     @Test
-    void updateUser(){
+    void updateUser() {
         UserDto testUserDto = new UserDto(1, "ibolipa", "0543",
                 "ibo@gmail.com", "12345", null, null);
 
@@ -91,10 +87,10 @@ class UserServiceTest {
         testUserDto.setUserName("mamolipa");
         testUserDto.setUserMail("cenderme");
 
-        userRepositoryDelegate.saveUser(testUserDto);
+        userService.updateUser(1, testUserDto);
 
-        assertEquals("mamolipa",testUserDto.getUserName());
-        assertEquals("cenderme",testUserDto.getUserMail());
-        assertEquals("0552",testUserDto.getUserPhoneNumber());
+        assertEquals("mamolipa", testUserDto.getUserName());
+        assertEquals("cenderme", testUserDto.getUserMail());
+        assertEquals("0552", testUserDto.getUserPhoneNumber());
     }
 }

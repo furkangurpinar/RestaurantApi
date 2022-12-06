@@ -52,7 +52,7 @@ public class UserRepositoryDelegateImpl implements UserRepositoryDelegate {
 
     @Transactional
     @Override
-    public void saveUser(UserDto userDto) {
+    public void updateUser(UserDto userDto) {
         User user = UserConverter.convert(userDto);
         userRepository.save(user);
     }
