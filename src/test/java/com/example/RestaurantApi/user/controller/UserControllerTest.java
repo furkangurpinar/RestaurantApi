@@ -20,7 +20,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -86,7 +88,28 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.userId", notNullValue()));
     }
 
-    public static String asJsonString(final Object obj) {
+    @Test
+    void deleteUser() throws Exception {
+        Optional<User> testResponse = Optional.of(new User());
+
+        when(mockRepository.findById(anyInt())).thenReturn(testResponse);
+        doNothing().when(mockRepository).delete(any(User.class));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/1"))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void deleteUser_shouldThrowNotFoundException_WhenUserIdNotFound() throws Exception {
+        doNothing().when(mockRepository).delete(any(User.class));
+        when(mockRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/1907"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("User ID Not Found - 1907"));
+    }
+
+    private static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {

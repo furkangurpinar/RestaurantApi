@@ -49,5 +49,15 @@ public class UserRepositoryDelegateImpl implements UserRepositoryDelegate {
         userRepository.save(user);
         return UserConverter.convert(user);
     }
+
+    @Transactional
+    @Override
+    public void deleteUser(int userId) {
+        Optional<User> response = userRepository.findById(userId);
+        if(response.isEmpty()) {
+            throw new UserNotFoundException("User ID Not Found - " + userId);
+        }
+        userRepository.delete(response.get());
+    }
 }
 

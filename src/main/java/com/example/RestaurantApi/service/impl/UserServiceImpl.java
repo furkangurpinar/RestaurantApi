@@ -30,5 +30,8 @@ public class UserServiceImpl implements UserService {
         return userRepositoryDelegate.createUser(request);
     }
 
-
+    @Override
+    public void deleteUser(int userId) {
+        userRepositoryDelegate.deleteUser(userId);
+    }
 }

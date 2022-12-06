@@ -14,12 +14,13 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class UserServiceTest {
@@ -78,5 +79,23 @@ class UserServiceTest {
         UserDto responseDto = userService.createUser(new UserRequest());
 
         assertEquals(testUserDto, responseDto);
+    }
+
+    @Test
+    void deleteUser() {
+        doNothing().when(userRepositoryDelegate).deleteUser(anyInt());
+
+        userService.deleteUser(new Random().nextInt());
+
+        verify(userRepositoryDelegate, times(1)).deleteUser(anyInt());
+    }
+
+    @Test
+    void deleteUser_shouldThrowNotFoundException_WhenUserIdNotFound() {
+        doThrow(UserNotFoundException.class).when(userRepositoryDelegate).deleteUser(anyInt());
+
+        assertThrows(UserNotFoundException.class, () ->userService.deleteUser(new Random().nextInt()));
+
+        verify(userRepositoryDelegate, times(1)).deleteUser(anyInt());
     }
 }
