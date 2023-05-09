@@ -1,6 +1,6 @@
 package com.example.RestaurantApi.request;
 
-import com.example.RestaurantApi.model.dto.UserDto;
+import com.example.RestaurantApi.model.dto.ProvinceDto;
 import lombok.*;
 
 @Getter
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserRequest {
+public class ProvinceRequest {
 
-    UserDto userDto;
+    ProvinceDto provinceDto;
 }

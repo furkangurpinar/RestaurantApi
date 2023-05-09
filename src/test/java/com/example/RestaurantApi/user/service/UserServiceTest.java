@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -61,7 +62,7 @@ class UserServiceTest {
     void getUser_itShouldThrowNotFound_whenUserIdNotFound() {
         when(userRepositoryDelegate.getUser(anyInt())).thenThrow(new UserNotFoundException("User Id Not Found - 1"));
 
-        assertThrows(UserNotFoundException.class, () -> userService.getUser(anyInt()));
+        assertThrows(UserNotFoundException.class, () -> userService.getUser(1));
     }
 
     @Test
@@ -78,19 +79,37 @@ class UserServiceTest {
 
     @Test
     void updateUser() {
-        UserDto testUserDto = new UserDto(1, "ibolipa", "0543",
-                "ibo@gmail.com", "12345", null, null);
+        UserDto testUserDto = UserDto.builder()
+                .userId(1)
+                .userName("ibolipa")
+                .userPhoneNumber("0543")
+                .userMail("ibo@gmail.com")
+                .build();
 
         when(userRepositoryDelegate.getUser(anyInt())).thenReturn(testUserDto);
 
-        testUserDto.setUserPhoneNumber("0552");
-        testUserDto.setUserName("mamolipa");
-        testUserDto.setUserMail("cenderme");
+        UserRequest request = new UserRequest(testUserDto);
 
-        userService.updateUser(1, testUserDto);
+        userService.updateUser(1, request);
 
-        assertEquals("mamolipa", testUserDto.getUserName());
-        assertEquals("cenderme", testUserDto.getUserMail());
-        assertEquals("0552", testUserDto.getUserPhoneNumber());
+        verify(userRepositoryDelegate, times(1)).updateUser(testUserDto);
+    }
+
+    @Test
+    void deleteUser() {
+        doNothing().when(userRepositoryDelegate).deleteUser(anyInt());
+
+        userService.deleteUser(new Random().nextInt());
+
+        verify(userRepositoryDelegate, times(1)).deleteUser(anyInt());
+    }
+
+    @Test
+    void deleteUser_shouldThrowNotFoundException_WhenUserIdNotFound() {
+        doThrow(UserNotFoundException.class).when(userRepositoryDelegate).deleteUser(anyInt());
+
+        assertThrows(UserNotFoundException.class, () ->userService.deleteUser(new Random().nextInt()));
+
+        verify(userRepositoryDelegate, times(1)).deleteUser(anyInt());
     }
 }

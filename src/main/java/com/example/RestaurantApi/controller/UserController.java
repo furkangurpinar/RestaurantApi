@@ -33,8 +33,15 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public UserDto updateUser(@RequestBody UserDto userDto, @PathVariable int userId) {
-        userService.updateUser(userId, userDto);
-        return userDto;
+    public ResponseEntity<HttpStatus> updateUser(@RequestBody UserRequest userRequest, @PathVariable int userId) {
+        userService.updateUser(userId, userRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable int userId) {
+        userService.deleteUser(userId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 }

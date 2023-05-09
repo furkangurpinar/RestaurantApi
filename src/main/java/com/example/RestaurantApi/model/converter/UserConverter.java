@@ -1,8 +1,10 @@
-package com.example.RestaurantApi.model.dto.converter;
+package com.example.RestaurantApi.model.converter;
 
 import com.example.RestaurantApi.model.dto.UserDto;
 import com.example.RestaurantApi.model.entity.User;
+import org.springframework.stereotype.Service;
 
+@Service
 public final class UserConverter {
 
     public static UserDto convert(User from) {

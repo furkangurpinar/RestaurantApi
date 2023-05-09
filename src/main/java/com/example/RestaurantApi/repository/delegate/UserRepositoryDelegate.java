@@ -13,4 +13,6 @@ public interface UserRepositoryDelegate {
     UserDto createUser(UserRequest request);
 
     void updateUser(UserDto userDto);
+
+    void deleteUser(int userId);
 }

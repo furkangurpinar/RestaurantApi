@@ -31,14 +31,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(int userId, UserDto userDto) {
-        UserDto response = userRepositoryDelegate.getUser(userId);
+    public void updateUser(int userId, UserRequest request) {
+        UserDto user = userRepositoryDelegate.getUser(userId);
 
-        response.setUserMail(userDto.getUserMail());
-        response.setUserName(userDto.getUserName());
-        response.setUserPhoneNumber(userDto.getUserPhoneNumber());
-        response.setUserPassword(userDto.getUserPassword());
+        final UserDto requestDto=request.getUserDto();
 
-        userRepositoryDelegate.updateUser(response);
+        user.setUserMail(requestDto.getUserMail());
+        user.setUserName(requestDto.getUserName());
+        user.setUserPhoneNumber(requestDto.getUserPhoneNumber());
+        user.setUserPassword(requestDto.getUserPassword());
+
+        userRepositoryDelegate.updateUser(user);
+    }
+
+    @Override
+    public void deleteUser(int userId) {
+        userRepositoryDelegate.deleteUser(userId);
     }
 }
