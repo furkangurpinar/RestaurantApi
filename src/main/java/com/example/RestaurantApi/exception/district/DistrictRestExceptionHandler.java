@@ -1,4 +1,4 @@
-package com.example.RestaurantApi.exception.user;
+package com.example.RestaurantApi.exception.district;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class UserRestExceptionHandler {
+public class DistrictRestExceptionHandler {
 
     @ExceptionHandler
-    ResponseEntity<UserErrorResponse> handleException(UserNotFoundException exc) {
-        UserErrorResponse error = new UserErrorResponse(
+    ResponseEntity<DistrictErrorResponse> handleException(DistrictNotFoundException exc) {
+        DistrictErrorResponse error = new DistrictErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
                 exc.getMessage(),
                 System.currentTimeMillis());
@@ -18,8 +18,8 @@ public class UserRestExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<UserErrorResponse> handleException(Exception exc) {
-        UserErrorResponse error = new UserErrorResponse(
+    public ResponseEntity<DistrictErrorResponse> handleException(Exception exc) {
+        DistrictErrorResponse error = new DistrictErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 exc.getMessage(),
                 System.currentTimeMillis());

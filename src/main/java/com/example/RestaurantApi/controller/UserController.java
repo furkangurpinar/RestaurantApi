@@ -31,4 +31,17 @@ public class UserController {
     public ResponseEntity<UserDto> createUser(@RequestBody UserRequest request) {
         return new ResponseEntity<>(userService.createUser(request), HttpStatus.CREATED);
     }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<HttpStatus> updateUser(@RequestBody UserRequest userRequest, @PathVariable int userId) {
+        userService.updateUser(userId, userRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable int userId) {
+        userService.deleteUser(userId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
 }

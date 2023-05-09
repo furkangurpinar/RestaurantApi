@@ -2,7 +2,7 @@ package com.example.RestaurantApi.repository.delegate.impl;
 
 import com.example.RestaurantApi.exception.user.UserNotFoundException;
 import com.example.RestaurantApi.model.dto.UserDto;
-import com.example.RestaurantApi.model.dto.converter.UserConverter;
+import com.example.RestaurantApi.model.converter.UserConverter;
 import com.example.RestaurantApi.model.entity.User;
 import com.example.RestaurantApi.repository.UserRepository;
 import com.example.RestaurantApi.repository.delegate.UserRepositoryDelegate;
@@ -49,5 +49,23 @@ public class UserRepositoryDelegateImpl implements UserRepositoryDelegate {
         userRepository.save(user);
         return UserConverter.convert(user);
     }
+
+    @Transactional
+    @Override
+    public void updateUser(UserDto userDto) {
+        User user = UserConverter.convert(userDto);
+        user.setUpdateDate(LocalDateTime.now());
+        userRepository.save(user);
+    }
+    @Transactional
+    @Override
+    public void deleteUser(int userId) {
+        Optional<User> response = userRepository.findById(userId);
+        if(response.isEmpty()) {
+            throw new UserNotFoundException("User ID Not Found - " + userId);
+        }
+        userRepository.delete(response.get());
+    }
+
 }
 
